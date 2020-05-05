@@ -2,7 +2,7 @@
 
 Higher order Next.js config to generate `sitemap.xml` and `robots.txt`.
 
-![size](https://img.shields.io/bundlephobia/minzip/next-with-sitemap.svg) ![dependencies](https://img.shields.io/david/cansin/next-with-sitemap.svg) ![downloads](https://img.shields.io/npm/dw/next-with-sitemap.svg) ![license](https://img.shields.io/npm/l/next-with-sitemap.svg)
+![size](https://img.shields.io/bundlephobia/minzip/next-with-sitemap.svg) ![dependencies](https://img.shields.io/david/cansin/next-with-sitemap.svg) ![downloads](https://img.shields.io/npm/dt/next-with-sitemap) ![license](https://img.shields.io/npm/l/next-with-sitemap.svg)
 
 ## Install
 
@@ -68,7 +68,3 @@ module.exports = withSitemap({
   - default to `true`
   - set `sitemap: false`, so it won't generate a `sitemap.xml`
   - set `sitemap: true` to generate a `sitemap.xml`
-  
-## License
-
-MIT
