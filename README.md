@@ -1,6 +1,7 @@
 # next-with-sitemap
 
-Higher order Next.js config to generate `sitemap.xml` and `robots.txt`.
+Higher order Next.js config to generate `sitemap.xml` and `robots.txt`. 
+Read more at [Medium](https://medium.com/@cansinyildiz/your-first-higher-order-next-js-config-cf8813b15807).
 
 ![size](https://img.shields.io/bundlephobia/minzip/next-with-sitemap.svg) ![dependencies](https://img.shields.io/david/cansin/next-with-sitemap.svg) ![downloads](https://img.shields.io/npm/dt/next-with-sitemap) ![license](https://img.shields.io/npm/l/next-with-sitemap.svg)
 
