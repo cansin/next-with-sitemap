@@ -15,7 +15,7 @@ function withSitemap(nextConfig = {}) {
         isServer,
         config: {
           pageExtensions,
-          sitemap: { dest = "public", domain, pages = "pages" } = {},
+          sitemap: { dest = "public", pages = "pages", ...sitemapOptions } = {},
         },
       } = options;
 
@@ -33,9 +33,9 @@ function withSitemap(nextConfig = {}) {
       config.plugins.push(
         new SitemapPlugin({
           destPath,
-          domain,
           pagesPath,
           pageExtensions,
+          ...sitemapOptions,
         })
       );
 
