@@ -1,5 +1,6 @@
 const defaults = require("./defaults");
-const SitemapPlugin = require(".");
+
+const SitemapPlugin = require("./index");
 
 describe("Sitemap Plugin", () => {
   it("should error out if 'baseUrl' is missing", () => {
