@@ -8,13 +8,13 @@ module.exports = {
     dir: {
       type: "string",
     },
-    destPath: {
+    dest: {
       type: "string",
     },
     pageExtensions: {
       type: "array",
     },
-    pagesPath: {
+    pages: {
       type: "string",
     },
     pageTags: {
@@ -43,6 +43,7 @@ module.exports = {
         additionalProperties: false,
         required: ["path"],
       },
+      uniqueItems: true,
     },
     robots: {
       type: "boolean",
