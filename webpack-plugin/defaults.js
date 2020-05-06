@@ -1,7 +1,8 @@
 module.exports = {
-  destPath: "public",
+  dir: process.cwd(),
+  dest: "public",
   pageExtensions: ["js"],
-  pagesPath: "pages",
+  pages: "pages",
   pageTags: [],
   robotsFilename: "robots.txt",
   sitemapFilename: "sitemap.xml",

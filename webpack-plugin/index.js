@@ -29,9 +29,10 @@ class SitemapPlugin {
   }
 
   generateSitemap() {
-    const { baseUrl, pageExtensions, pagesPath } = this.options;
+    const { baseUrl, dir, pageExtensions, pages } = this.options;
+    const pagesPath = path.join(dir, pages);
 
-    const pages = glob
+    const pageUrls = glob
       .sync(`**/*.+(${pageExtensions.join(",")})`, { cwd: pagesPath })
       .map((page) =>
         page.replace(
@@ -56,7 +57,7 @@ class SitemapPlugin {
       },
     };
 
-    pages.forEach((page) => {
+    pageUrls.forEach((page) => {
       sitemapObj.urlset.url.push({
         loc: `${baseUrl}/${page}`,
         lastmod: date,
@@ -68,14 +69,15 @@ class SitemapPlugin {
 
   apply(compiler) {
     const {
-      destPath,
+      dest,
+      dir,
       robotsFilename,
       sitemapFilename,
       robots,
       sitemap,
     } = this.options;
-    const robotsDest = path.join(destPath, robotsFilename);
-    const sitemapDest = path.join(destPath, sitemapFilename);
+    const robotsDest = path.join(dir, dest, robotsFilename);
+    const sitemapDest = path.join(dir, dest, sitemapFilename);
 
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [robotsDest, sitemapDest],

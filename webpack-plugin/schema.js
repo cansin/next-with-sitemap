@@ -5,6 +5,9 @@ module.exports = {
     baseUrl: {
       type: "string",
     },
+    dir: {
+      type: "string",
+    },
     destPath: {
       type: "string",
     },
