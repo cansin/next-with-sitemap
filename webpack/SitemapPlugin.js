@@ -10,10 +10,10 @@ const glob = require("glob");
 const schema = {
   type: "object",
   properties: {
-    destPath: {
+    baseUrl: {
       type: "string",
     },
-    domain: {
+    destPath: {
       type: "string",
     },
     pageExtensions: {
@@ -42,7 +42,7 @@ class SitemapPlugin {
       destPath,
       robotsFilename = "robots.txt",
       sitemapFilename = "sitemap.xml",
-      domain,
+      baseUrl,
       pageExtensions,
       pagesPath,
       robots = true,
@@ -73,20 +73,23 @@ class SitemapPlugin {
       const date = new Date().toISOString().slice(0, 10);
       const sitemapObj = {
         urlset: {
-          _xmlns: "https://www.sitemaps.org/schemas/sitemap/0.9/",
+          "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+          "_xsi:schemaLocation":
+            "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+          _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
           url: [],
         },
       };
 
       pages.forEach((page) => {
         sitemapObj.urlset.url.push({
-          loc: `${domain}/${page}`,
+          loc: `${baseUrl}/${page}`,
           lastmod: date,
         });
       });
 
       if (robots) {
-        const robotsTxt = `User-agent: *\nAllow: /\nSitemap: ${domain}/${sitemapFilename}`;
+        const robotsTxt = `User-agent: *\nAllow: /\nSitemap: ${baseUrl}/${sitemapFilename}`;
         fs.writeFileSync(robotsDest, robotsTxt, {
           flag: "as",
         });

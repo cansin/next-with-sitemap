@@ -20,7 +20,7 @@ const withSitemap = require("next-with-sitemap");
 
 module.exports = withSitemap({
   sitemap: {
-    domain: "https://www.example.com",
+    baseUrl: "https://www.example.com",
   },
   // .
   // ..
@@ -45,7 +45,7 @@ const withSitemap = require("next-with-sitemap");
 
 module.exports = withSitemap({
   sitemap: {
-    domain: "https://www.example.com",
+    baseUrl: "https://www.example.com",
     dest: "public",
     pages: "pages",
     robots: true,
@@ -56,7 +56,7 @@ module.exports = withSitemap({
 
 ### Available Options
 
-- **domain:** string (required) - the domain name including protocol and subdomain (e.g. `https://www.example.com`)
+- **baseUrl:** string (required) - the baseUrl name including protocol and subdomain (e.g. `https://www.example.com`)
 - **dest:** string - the destination folder to put generated files, relative to the project root
   - default to `public`
 - **pages:** string - the folder that contains page files, relative to the project root
