@@ -71,20 +71,21 @@ module.exports = withSitemap({
 
 ### Available Options
 
-- **baseUrl:** string (required) - the baseUrl name including protocol and subdomain (e.g. `https://www.example.com`)
-- **dest:** string - the destination folder to put generated files, relative to the project root
-  - default to `public`
-- **pages:** string - the folder that contains page files, relative to the project root
-  - default to `pages`
-- **pageTags:** array - an array of additional tags for any given path
-  - set `path` (required) to the relative path of the page  
-  - set `changefreq` to one of `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never` values
-  - set `priority` to a number value between `0` and `1` (inclusive)
-- **robots:** boolean - whether to enable `robots.txt` generation
-  - default to `true`
-  - set `robots: false`, so it won't generate a `robots.txt`
-  - set `robots: true` to generate a `robots.txt`
-- **sitemap:** boolean - whether to enable `sitemap.xml` generation
-  - default to `true`
-  - set `sitemap: false`, so it won't generate a `sitemap.xml`
-  - set `sitemap: true` to generate a `sitemap.xml`
+- **baseUrl:** string (required) - the baseUrl name including protocol and subdomain (e.g. `https://www.example.com`).
+- **dest:** string - the destination folder to put generated files, relative to the project root.
+  - defaults to `public`.
+- **pages:** string - the folder that contains page files, relative to the project root.
+  - defaults to `pages`.
+- **pageTags:** array - an array of additional tags for any given path.
+  - for each object in array:
+    - set `path` (required) to the relative path of the page,  
+    - set `changefreq` to one of `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never` values,
+    - set `priority` to a number value between `0` and `1` (inclusive).
+- **robots:** boolean - whether to enable `robots.txt` generation.
+  - defaults to `true`,
+  - set `robots: false`, so it won't generate a `robots.txt`,
+  - set `robots: true` to generate a `robots.txt`.
+- **sitemap:** boolean - whether to enable `sitemap.xml` generation.
+  - defaults to `true`,
+  - set `sitemap: false`, so it won't generate a `sitemap.xml`,
+  - set `sitemap: true` to generate a `sitemap.xml`.
