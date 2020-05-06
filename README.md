@@ -76,6 +76,10 @@ module.exports = withSitemap({
   - default to `public`
 - **pages:** string - the folder that contains page files, relative to the project root
   - default to `pages`
+- **pageTags:** array - an array of additional tags for any given path
+  - set `path` (required) to the relative path of the page  
+  - set `changefreq` to one of `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never` values
+  - set `priority` to a number value between `0` and `1` (inclusive)
 - **robots:** boolean - whether to enable `robots.txt` generation
   - default to `true`
   - set `robots: false`, so it won't generate a `robots.txt`
