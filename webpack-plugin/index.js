@@ -29,7 +29,7 @@ class SitemapPlugin {
   }
 
   generateSitemap() {
-    const { baseUrl, dir, pageExtensions, pages } = this.options;
+    const { baseUrl, dir, pageExtensions, pages, pageTags } = this.options;
     const pagesPath = path.join(dir, pages);
 
     const pageUrls = glob
@@ -58,9 +58,14 @@ class SitemapPlugin {
     };
 
     pageUrls.forEach((page) => {
-      sitemapObj.urlset.url.push({
+      const defaultsTags = {
         loc: `${baseUrl}/${page}`,
         lastmod: date,
+      };
+      const additionalTags = pageTags.find((p) => p.path === `/${page}`) || {};
+      sitemapObj.urlset.url.push({
+        ...defaultsTags,
+        ...additionalTags,
       });
     });
 

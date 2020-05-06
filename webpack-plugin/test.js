@@ -19,8 +19,8 @@ describe("Sitemap Plugin", () => {
   it("can accept all the options", () => {
     const options = {
       baseUrl: "https://www.example.com",
-      destPath: "/path/to/public",
-      pagesPath: "/path/to/pages",
+      dest: "public",
+      pages: "pages",
       pageTags: [
         {
           path: "/",
@@ -99,6 +99,7 @@ describe("Sitemap Plugin", () => {
   it("can generate 'robots.txt'", () => {
     const options = {
       baseUrl: "https://www.example.com",
+      pages: "webpack-plugin/test/pages",
     };
     const plugin = new SitemapPlugin(options);
     expect(plugin.generateSitemap()).toEqual({
@@ -107,7 +108,80 @@ describe("Sitemap Plugin", () => {
         "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
         "_xsi:schemaLocation":
           "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
-        url: [],
+        url: [
+          {
+            lastmod: "2020-05-06",
+            loc: "https://www.example.com/about",
+          },
+          {
+            lastmod: "2020-05-06",
+            loc: "https://www.example.com/",
+          },
+          {
+            lastmod: "2020-05-06",
+            loc: "https://www.example.com/login",
+          },
+          {
+            lastmod: "2020-05-06",
+            loc: "https://www.example.com/signup",
+          },
+        ],
+      },
+    });
+  });
+
+  it("can have 'pageTags'", () => {
+    const options = {
+      baseUrl: "https://www.example.com",
+      pages: "webpack-plugin/test/pages",
+      pageTags: [
+        {
+          path: "/",
+          priority: 1.0,
+        },
+        {
+          path: "/login",
+          changefreq: "monthly",
+        },
+        {
+          path: "/about",
+          changefreq: "weekly",
+          priority: 0.5,
+        },
+      ],
+    };
+    const plugin = new SitemapPlugin(options);
+    expect(plugin.generateSitemap()).toEqual({
+      urlset: {
+        _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "_xsi:schemaLocation":
+          "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+        url: [
+          {
+            changefreq: "weekly",
+            lastmod: "2020-05-06",
+            loc: "https://www.example.com/about",
+            path: "/about",
+            priority: 0.5,
+          },
+          {
+            lastmod: "2020-05-06",
+            loc: "https://www.example.com/",
+            path: "/",
+            priority: 1,
+          },
+          {
+            changefreq: "monthly",
+            lastmod: "2020-05-06",
+            loc: "https://www.example.com/login",
+            path: "/login",
+          },
+          {
+            lastmod: "2020-05-06",
+            loc: "https://www.example.com/signup",
+          },
+        ],
       },
     });
   });

@@ -48,6 +48,21 @@ module.exports = withSitemap({
     baseUrl: "https://www.example.com",
     dest: "public",
     pages: "pages",
+    pageTags: [
+      {
+        path: "/",
+        priority: 1.0,
+      },
+      {
+        path: "/login",
+        changefreq: "monthly",
+      },
+      {
+        path: "/about",
+        changefreq: "weekly",
+        priority: 0.5,
+      },
+    ],
     robots: true,
     sitemap: true,
   },
