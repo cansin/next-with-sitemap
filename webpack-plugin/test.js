@@ -1,5 +1,5 @@
-const defaults = require("./webpack/defaults");
-const SitemapPlugin = require("./webpack/SitemapPlugin");
+const defaults = require("./defaults");
+const SitemapPlugin = require(".");
 
 describe("Sitemap Plugin", () => {
   it("should error out if 'baseUrl' is missing", () => {

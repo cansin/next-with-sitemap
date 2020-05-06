@@ -1,6 +1,6 @@
 const path = require("path");
 
-const SitemapPlugin = require("./webpack/SitemapPlugin");
+const SitemapPlugin = require("./webpack-plugin");
 
 function withSitemap(nextConfig = {}) {
   return {
