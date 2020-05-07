@@ -89,6 +89,7 @@ module.exports = withSitemap({
 
 - **baseUrl:** string (required) - the baseUrl name including protocol and subdomain (e.g. `https://www.example.com`).
 - **alternateBaseUrls:** array - an array of alternative base urls for given languages.
+  - defaults to `[]`.
   - for each object in array:
     - set `lang` (required) to the language identifier,
     - set `url` (required) to the base url that should be used for that `lang`.
@@ -101,6 +102,7 @@ module.exports = withSitemap({
 - **pages:** string - the folder that contains page files, relative to the project root.
   - defaults to `pages`.
 - **pageTags:** array - an array of additional tags for any given path.
+  - defaults to `[]`.
   - for each object in array:
     - set `path` (required) to the relative path of the page,
     - set `changefreq` to one of `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never` values,
