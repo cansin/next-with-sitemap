@@ -297,4 +297,113 @@ describe("Sitemap Plugin", () => {
       },
     });
   });
+
+  it("can have 'alternateBaseUrls'", async () => {
+    const options = {
+      alternateBaseUrls: [
+        {
+          lang: "jp",
+          url: "https://example.jp",
+        },
+        {
+          lang: "es",
+          url: "https://example.com/es",
+        },
+      ],
+      baseUrl: "https://www.example.com",
+      pages: "webpack-plugin/test/pages",
+      extraPaths: ["/extra/path"],
+    };
+    const plugin = new SitemapPlugin(options);
+    expect(await plugin.generateSitemap()).toEqual({
+      urlset: {
+        _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "_xsi:schemaLocation":
+          "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+        url: [
+          {
+            lastmod,
+            loc: "https://www.example.com/about",
+            "xhtml:link": [
+              {
+                _href: "https://example.jp/about",
+                _hreflang: "jp",
+                _rel: "alternate",
+              },
+              {
+                _href: "https://example.com/es/about",
+                _hreflang: "es",
+                _rel: "alternate",
+              },
+            ],
+          },
+          {
+            lastmod,
+            loc: "https://www.example.com/",
+            "xhtml:link": [
+              {
+                _href: "https://example.jp/",
+                _hreflang: "jp",
+                _rel: "alternate",
+              },
+              {
+                _href: "https://example.com/es/",
+                _hreflang: "es",
+                _rel: "alternate",
+              },
+            ],
+          },
+          {
+            lastmod,
+            loc: "https://www.example.com/login",
+            "xhtml:link": [
+              {
+                _href: "https://example.jp/login",
+                _hreflang: "jp",
+                _rel: "alternate",
+              },
+              {
+                _href: "https://example.com/es/login",
+                _hreflang: "es",
+                _rel: "alternate",
+              },
+            ],
+          },
+          {
+            lastmod,
+            loc: "https://www.example.com/signup",
+            "xhtml:link": [
+              {
+                _href: "https://example.jp/signup",
+                _hreflang: "jp",
+                _rel: "alternate",
+              },
+              {
+                _href: "https://example.com/es/signup",
+                _hreflang: "es",
+                _rel: "alternate",
+              },
+            ],
+          },
+          {
+            lastmod,
+            loc: "https://www.example.com/extra/path",
+            "xhtml:link": [
+              {
+                _href: "https://example.jp/extra/path",
+                _hreflang: "jp",
+                _rel: "alternate",
+              },
+              {
+                _href: "https://example.com/es/extra/path",
+                _hreflang: "es",
+                _rel: "alternate",
+              },
+            ],
+          },
+        ],
+      },
+    });
+  });
 });

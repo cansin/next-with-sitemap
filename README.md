@@ -1,7 +1,7 @@
 # next-with-sitemap
 
 Higher order Next.js config to generate `sitemap.xml` and `robots.txt`.
-Read more at [Medium](https://medium.com/@cansinyildiz/your-first-higher-order-next-js-config-cf8813b15807). 
+Read more at [Medium](https://medium.com/@cansinyildiz/your-first-higher-order-next-js-config-cf8813b15807).
 Heavily inspired from [IlusionDev/nextjs-sitemap-generator](https://github.com/IlusionDev/nextjs-sitemap-generator).
 
 ![size](https://img.shields.io/bundlephobia/minzip/next-with-sitemap.svg) ![dependencies](https://img.shields.io/david/cansin/next-with-sitemap.svg) ![build](https://img.shields.io/travis/com/cansin/next-with-sitemap) ![downloads](https://img.shields.io/npm/dt/next-with-sitemap) ![license](https://img.shields.io/npm/l/next-with-sitemap.svg)
@@ -39,9 +39,9 @@ sitemap.xml
 ## Configuration
 
 There are options you can use to customize the behavior of this plugin
-by adding `sitemap` object in the Next.js config in `next.config.js`. 
-Alongside those given `sitemap` options, this library would also rely 
-on your Next.js config values `exportPathMap`, `exportTrailingSlash`, 
+by adding `sitemap` object in the Next.js config in `next.config.js`.
+Alongside those given `sitemap` options, this library would also rely
+on your Next.js config values `exportPathMap`, `exportTrailingSlash`,
 and `pageExtensions` to come up with the correct `sitemap.xml` content.
 
 ```js
@@ -50,6 +50,16 @@ const withSitemap = require("next-with-sitemap");
 module.exports = withSitemap({
   sitemap: {
     baseUrl: "https://www.example.com",
+    alternateBaseUrls: [
+      {
+        lang: "jp",
+        url: "https://example.jp",
+      },
+      {
+        lang: "es",
+        url: "https://example.com/es",
+      },
+    ],
     dest: "public",
     excludedPaths: ["/login", "/signup"],
     extraPaths: ["/extra/path"],
@@ -78,6 +88,10 @@ module.exports = withSitemap({
 ### Available Options
 
 - **baseUrl:** string (required) - the baseUrl name including protocol and subdomain (e.g. `https://www.example.com`).
+- **alternateBaseUrls:** array - an array of alternative base urls for given languages.
+  - for each object in array:
+    - set `lang` (required) to the language identifier,
+    - set `url` (required) to the base url that should be used for that `lang`.
 - **dest:** string - the destination folder to put generated files, relative to the project root.
   - defaults to `public`.
 - **excludedPaths:** array - an array of paths that should be excluded from the sitemap.
@@ -88,7 +102,7 @@ module.exports = withSitemap({
   - defaults to `pages`.
 - **pageTags:** array - an array of additional tags for any given path.
   - for each object in array:
-    - set `path` (required) to the relative path of the page,  
+    - set `path` (required) to the relative path of the page,
     - set `changefreq` to one of `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never` values,
     - set `priority` to a number value between `0` and `1` (inclusive).
 - **robots:** boolean - whether to enable `robots.txt` generation.

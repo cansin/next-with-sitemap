@@ -2,6 +2,25 @@ module.exports = {
   type: "object",
   definitions: {},
   properties: {
+    alternateBaseUrls: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          lang: {
+            type: "string",
+            minLength: 1,
+          },
+          url: {
+            type: "string",
+            minLength: 1,
+          },
+        },
+        additionalProperties: false,
+        required: ["lang", "url"],
+      },
+      uniqueItems: true,
+    },
     baseUrl: {
       type: "string",
     },
@@ -26,6 +45,7 @@ module.exports = {
         type: "string",
         minLength: 1,
       },
+      uniqueItems: true,
     },
     extraPaths: {
       type: "array",
@@ -33,6 +53,7 @@ module.exports = {
         type: "string",
         minLength: 1,
       },
+      uniqueItems: true,
     },
     exportPathMap: {
       instanceof: "Function",
@@ -45,6 +66,7 @@ module.exports = {
     },
     pageExtensions: {
       type: "array",
+      uniqueItems: true,
     },
     pages: {
       type: "string",

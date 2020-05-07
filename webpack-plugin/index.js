@@ -30,6 +30,7 @@ class SitemapPlugin {
 
   async generateSitemap() {
     const {
+      alternateBaseUrls,
       baseUrl,
       dev,
       dir,
@@ -103,6 +104,15 @@ class SitemapPlugin {
         loc: `${baseUrl}${page}`,
         lastmod: date,
       };
+
+      if (alternateBaseUrls.length) {
+        defaultsTags["xhtml:link"] = alternateBaseUrls.map(({ lang, url }) => ({
+          _rel: "alternate",
+          _hreflang: lang,
+          _href: `${url}${page}`,
+        }));
+      }
+
       const additionalTags = pageTags.find((p) => p.path === page) || {};
 
       sitemapObj.urlset.url.push({

@@ -1,4 +1,5 @@
 module.exports = {
+  alternateBaseUrls: [],
   buildId: "",
   dest: "public",
   dev: true,
