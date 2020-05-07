@@ -39,7 +39,10 @@ sitemap.xml
 ## Configuration
 
 There are options you can use to customize the behavior of this plugin
-by adding `sitemap` object in the Next.js config in `next.config.js`:
+by adding `sitemap` object in the Next.js config in `next.config.js`. 
+Alongside those given `sitemap` options, this library would also rely 
+on your Next.js config values `exportPathMap`, `exportTrailingSlash`, 
+and `pageExtensions` to come up with the correct `sitemap.xml` content.
 
 ```js
 const withSitemap = require("next-with-sitemap");
