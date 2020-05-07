@@ -47,6 +47,8 @@ module.exports = withSitemap({
   sitemap: {
     baseUrl: "https://www.example.com",
     dest: "public",
+    excludedPaths: ["/login", "/signup"],
+    extraPaths: ["/extra/path"],
     pages: "pages",
     pageTags: [
       {
@@ -54,7 +56,7 @@ module.exports = withSitemap({
         priority: 1.0,
       },
       {
-        path: "/login",
+        path: "/extra/path",
         changefreq: "monthly",
       },
       {
@@ -74,6 +76,10 @@ module.exports = withSitemap({
 - **baseUrl:** string (required) - the baseUrl name including protocol and subdomain (e.g. `https://www.example.com`).
 - **dest:** string - the destination folder to put generated files, relative to the project root.
   - defaults to `public`.
+- **excludedPaths:** array - an array of paths that should be excluded from the sitemap.
+  - defaults to `[]`.
+- **extraPaths:** array - an array of extra paths that cannot be found at `pages` folder and that should be included to the sitemap.
+  - defaults to `[]`.
 - **pages:** string - the folder that contains page files, relative to the project root.
   - defaults to `pages`.
 - **pageTags:** array - an array of additional tags for any given path.

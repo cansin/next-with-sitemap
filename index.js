@@ -10,16 +10,20 @@ function withSitemap(nextConfig = {}) {
       }
 
       const {
+        dev,
         dir,
+        outDir,
+        distDir,
+        buildId,
         isServer,
-        config: { pageExtensions, sitemap },
+        config: { exportPathMap, exportTrailingSlash, pageExtensions, sitemap },
       } = options;
 
       if (isServer) {
         return config;
       }
 
-      const { dest, pages } = sitemap;
+      const { dest = "public", pages = "pages" } = sitemap;
 
       console.log("> Generating sitemap.xml and robots.txt");
       console.log(`> Pages folder: "${pages}"`);
@@ -27,9 +31,15 @@ function withSitemap(nextConfig = {}) {
 
       config.plugins.push(
         new SitemapPlugin({
-          dir,
-          pageExtensions,
           ...sitemap,
+          dev,
+          dir,
+          outDir,
+          distDir,
+          buildId,
+          pageExtensions,
+          exportPathMap,
+          exportTrailingSlash,
         })
       );
 

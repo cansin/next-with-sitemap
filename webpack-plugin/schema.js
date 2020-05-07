@@ -5,10 +5,42 @@ module.exports = {
     baseUrl: {
       type: "string",
     },
-    dir: {
+    buildId: {
       type: "string",
     },
     dest: {
+      type: "string",
+    },
+    dev: {
+      type: "boolean",
+    },
+    dir: {
+      type: "string",
+    },
+    distDir: {
+      type: "string",
+    },
+    excludedPaths: {
+      type: "array",
+      items: {
+        type: "string",
+        minLength: 1,
+      },
+    },
+    extraPaths: {
+      type: "array",
+      items: {
+        type: "string",
+        minLength: 1,
+      },
+    },
+    exportPathMap: {
+      instanceof: "Function",
+    },
+    exportTrailingSlash: {
+      type: "boolean",
+    },
+    outDir: {
       type: "string",
     },
     pageExtensions: {

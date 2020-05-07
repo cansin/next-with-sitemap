@@ -2,6 +2,8 @@ const defaults = require("./defaults");
 
 const SitemapPlugin = require("./index");
 
+const lastmod = new Date().toISOString().slice(0, 10);
+
 describe("Sitemap Plugin", () => {
   it("should error out if 'baseUrl' is missing", () => {
     const options = {};
@@ -81,12 +83,12 @@ describe("Sitemap Plugin", () => {
     expect(plugin).toThrow(/sitemap has an unknown property 'unknown'/);
   });
 
-  it("can generate 'sitemap.xml'", () => {
+  it("can generate 'sitemap.xml'", async () => {
     const options = {
       baseUrl: "https://www.example.com",
     };
     const plugin = new SitemapPlugin(options);
-    expect(plugin.generateSitemap()).toEqual({
+    expect(await plugin.generateSitemap()).toEqual({
       urlset: {
         _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
         "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
@@ -97,13 +99,13 @@ describe("Sitemap Plugin", () => {
     });
   });
 
-  it("can generate 'robots.txt'", () => {
+  it("can generate 'robots.txt'", async () => {
     const options = {
       baseUrl: "https://www.example.com",
       pages: "webpack-plugin/test/pages",
     };
     const plugin = new SitemapPlugin(options);
-    expect(plugin.generateSitemap()).toEqual({
+    expect(await plugin.generateSitemap()).toEqual({
       urlset: {
         _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
         "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
@@ -111,19 +113,19 @@ describe("Sitemap Plugin", () => {
           "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
         url: [
           {
-            lastmod: "2020-05-06",
+            lastmod,
             loc: "https://www.example.com/about",
           },
           {
-            lastmod: "2020-05-06",
+            lastmod,
             loc: "https://www.example.com/",
           },
           {
-            lastmod: "2020-05-06",
+            lastmod,
             loc: "https://www.example.com/login",
           },
           {
-            lastmod: "2020-05-06",
+            lastmod,
             loc: "https://www.example.com/signup",
           },
         ],
@@ -131,7 +133,7 @@ describe("Sitemap Plugin", () => {
     });
   });
 
-  it("can have 'pageTags'", () => {
+  it("can have 'pageTags'", async () => {
     const options = {
       baseUrl: "https://www.example.com",
       pages: "webpack-plugin/test/pages",
@@ -152,7 +154,7 @@ describe("Sitemap Plugin", () => {
       ],
     };
     const plugin = new SitemapPlugin(options);
-    expect(plugin.generateSitemap()).toEqual({
+    expect(await plugin.generateSitemap()).toEqual({
       urlset: {
         _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
         "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
@@ -161,27 +163,136 @@ describe("Sitemap Plugin", () => {
         url: [
           {
             changefreq: "weekly",
-            lastmod: "2020-05-06",
+            lastmod,
             loc: "https://www.example.com/about",
             path: "/about",
             priority: 0.5,
           },
           {
-            lastmod: "2020-05-06",
+            lastmod,
             loc: "https://www.example.com/",
             path: "/",
             priority: 1,
           },
           {
             changefreq: "monthly",
-            lastmod: "2020-05-06",
+            lastmod,
             loc: "https://www.example.com/login",
             path: "/login",
           },
           {
-            lastmod: "2020-05-06",
+            lastmod,
             loc: "https://www.example.com/signup",
           },
+        ],
+      },
+    });
+  });
+
+  it("can support 'exportPathMap'", async () => {
+    const options = {
+      baseUrl: "https://www.example.com",
+      pages: "webpack-plugin/test/pages",
+      exportPathMap: async function () {
+        return {
+          "/": { page: "/" },
+          "/about": { page: "/about" },
+          "/p/hello-nextjs": {
+            page: "/post",
+            query: { title: "hello-nextjs" },
+          },
+          "/p/learn-nextjs": {
+            page: "/post",
+            query: { title: "learn-nextjs" },
+          },
+          "/p/deploy-nextjs": {
+            page: "/post",
+            query: { title: "deploy-nextjs" },
+          },
+        };
+      },
+    };
+    const plugin = new SitemapPlugin(options);
+    expect(await plugin.generateSitemap()).toEqual({
+      urlset: {
+        _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "_xsi:schemaLocation":
+          "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+        url: [
+          { lastmod, loc: "https://www.example.com/" },
+          { lastmod, loc: "https://www.example.com/about" },
+          { lastmod, loc: "https://www.example.com/p/hello-nextjs" },
+          { lastmod, loc: "https://www.example.com/p/learn-nextjs" },
+          { lastmod, loc: "https://www.example.com/p/deploy-nextjs" },
+        ],
+      },
+    });
+  });
+
+  it("can support 'exportTrailingSlash'", async () => {
+    const options = {
+      baseUrl: "https://www.example.com",
+      pages: "webpack-plugin/test/pages",
+      exportTrailingSlash: true,
+    };
+    const plugin = new SitemapPlugin(options);
+    expect(await plugin.generateSitemap()).toEqual({
+      urlset: {
+        _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "_xsi:schemaLocation":
+          "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+        url: [
+          { lastmod, loc: "https://www.example.com/about/" },
+          { lastmod, loc: "https://www.example.com/" },
+          { lastmod, loc: "https://www.example.com/login/" },
+          { lastmod, loc: "https://www.example.com/signup/" },
+        ],
+      },
+    });
+  });
+
+  it("can have 'excludedPaths'", async () => {
+    const options = {
+      baseUrl: "https://www.example.com",
+      pages: "webpack-plugin/test/pages",
+      excludedPaths: ["/login", "/signup"],
+    };
+    const plugin = new SitemapPlugin(options);
+    expect(await plugin.generateSitemap()).toEqual({
+      urlset: {
+        _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "_xsi:schemaLocation":
+          "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+        url: [
+          { lastmod, loc: "https://www.example.com/about" },
+          { lastmod, loc: "https://www.example.com/" },
+        ],
+      },
+    });
+  });
+
+  it("can have 'extraPaths'", async () => {
+    const options = {
+      baseUrl: "https://www.example.com",
+      pages: "webpack-plugin/test/pages",
+      extraPaths: ["/extra/path"],
+    };
+    const plugin = new SitemapPlugin(options);
+    expect(await plugin.generateSitemap()).toEqual({
+      urlset: {
+        _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "_xsi:schemaLocation":
+          "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+        url: [
+          { lastmod, loc: "https://www.example.com/about" },
+          { lastmod, loc: "https://www.example.com/" },
+          { lastmod, loc: "https://www.example.com/login" },
+          { lastmod, loc: "https://www.example.com/signup" },
+          { lastmod, loc: "https://www.example.com/extra/path" },
         ],
       },
     });

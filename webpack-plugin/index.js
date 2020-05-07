@@ -28,11 +28,25 @@ class SitemapPlugin {
     return `User-agent: *\nAllow: /\nSitemap: ${baseUrl}/${sitemapFilename}`;
   }
 
-  generateSitemap() {
-    const { baseUrl, dir, pageExtensions, pages, pageTags } = this.options;
+  async generateSitemap() {
+    const {
+      baseUrl,
+      dev,
+      dir,
+      outDir,
+      distDir,
+      buildId,
+      excludedPaths,
+      extraPaths,
+      exportPathMap,
+      exportTrailingSlash,
+      pageExtensions,
+      pages,
+      pageTags,
+    } = this.options;
     const pagesPath = path.join(dir, pages);
 
-    const pageUrls = glob
+    const defaultPaths = glob
       .sync(`**/*.+(${pageExtensions.join(",")})`, { cwd: pagesPath })
       .map((page) =>
         page.replace(
@@ -44,7 +58,34 @@ class SitemapPlugin {
           "$1"
         )
       )
-      .filter((page) => !page.startsWith("_"));
+      .filter((page) => !page.startsWith("_"))
+      .map((page) => `/${page}${exportTrailingSlash && page ? "/" : ""}`);
+
+    let pathMap = {};
+    defaultPaths.forEach((path) => {
+      pathMap[path] = { page: path };
+    });
+
+    if (exportPathMap) {
+      pathMap = await exportPathMap(pathMap, {
+        dev,
+        dir,
+        outDir,
+        distDir,
+        buildId,
+      });
+    }
+
+    if (excludedPaths) {
+      excludedPaths.forEach((excludedPath) => delete pathMap[excludedPath]);
+    }
+
+    if (extraPaths) {
+      extraPaths.forEach(
+        (extraPath) => (pathMap[extraPath] = { path: extraPath })
+      );
+    }
+
     const date = new Date().toISOString().slice(0, 10);
 
     const sitemapObj = {
@@ -57,12 +98,13 @@ class SitemapPlugin {
       },
     };
 
-    pageUrls.forEach((page) => {
+    Object.keys(pathMap).forEach((page) => {
       const defaultsTags = {
-        loc: `${baseUrl}/${page}`,
+        loc: `${baseUrl}${page}`,
         lastmod: date,
       };
-      const additionalTags = pageTags.find((p) => p.path === `/${page}`) || {};
+      const additionalTags = pageTags.find((p) => p.path === page) || {};
+
       sitemapObj.urlset.url.push({
         ...defaultsTags,
         ...additionalTags,
@@ -88,7 +130,7 @@ class SitemapPlugin {
       cleanOnceBeforeBuildPatterns: [robotsDest, sitemapDest],
     }).apply(compiler);
 
-    compiler.hooks.done.tap("SitemapPlugin", () => {
+    compiler.hooks.done.tap("SitemapPlugin", async () => {
       const x2js = new X2JS();
 
       if (robots) {
@@ -99,7 +141,7 @@ class SitemapPlugin {
       }
 
       if (sitemap) {
-        const sitemapObj = this.generateSitemap();
+        const sitemapObj = await this.generateSitemap();
         const sitemapXml = format(
           `<?xml version="1.0" encoding="UTF-8"?>${x2js.js2xml(sitemapObj)}`,
           {
