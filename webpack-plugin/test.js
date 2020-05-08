@@ -230,6 +230,29 @@ describe("Sitemap Plugin", () => {
     });
   });
 
+  it("can support 'pageExtensions'", async () => {
+    const options = {
+      baseUrl: "https://www.example.com",
+      pages: "webpack-plugin/test/pages-with-custom-extension",
+      pageExtensions: ["page.js", "path.js"],
+    };
+    const plugin = new SitemapPlugin(options);
+    expect(await plugin.generateSitemap()).toEqual({
+      urlset: {
+        _xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "_xsi:schemaLocation":
+          "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+        url: [
+          { lastmod, loc: "https://www.example.com/about" },
+          { lastmod, loc: "https://www.example.com/" },
+          { lastmod, loc: "https://www.example.com/login" },
+          { lastmod, loc: "https://www.example.com/signup" },
+        ],
+      },
+    });
+  });
+
   it("can support 'exportTrailingSlash'", async () => {
     const options = {
       baseUrl: "https://www.example.com",
