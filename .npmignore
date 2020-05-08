@@ -1,6 +1,9 @@
 .idea/
 node_modules/
+test/
+test.js
+.eslintrc.js
+.gitignore
+.travis.yml
 yarn.lock
 yarn-error.log
-.gitignore
-.eslintrc.js
