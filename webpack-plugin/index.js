@@ -48,7 +48,7 @@ class SitemapPlugin {
     const pagesPath = path.join(dir, pages);
 
     const defaultPaths = glob
-      .sync(`**/*.+(${pageExtensions.join(",")})`, { cwd: pagesPath })
+      .sync(`**/*.+(${pageExtensions.join("|")})`, { cwd: pagesPath })
       .map((page) =>
         page.replace(
           new RegExp(
