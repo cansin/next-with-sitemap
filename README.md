@@ -1,6 +1,6 @@
 # next-with-sitemap
 [![size](https://img.shields.io/bundlephobia/minzip/next-with-sitemap)](https://bundlephobia.com/result?p=next-with-sitemap)
-[![dependencies](https://img.shields.io/librariesio/release/npm/next-with-sitemap)](https://libraries.io/npm/@next-with-sitemap)
+[![dependencies](https://img.shields.io/librariesio/release/npm/next-with-sitemap)](https://libraries.io/npm/next-with-sitemap)
 [![build](https://img.shields.io/travis/com/cansin/next-with-sitemap)](https://travis-ci.com/github/cansin/next-with-sitemap)
 [![downloads](https://img.shields.io/npm/dm/next-with-sitemap)](https://www.npmjs.com/package/next-with-sitemap)
 [![license](https://img.shields.io/github/license/cansin/next-with-sitemap)](https://github.com/cansin/next-with-sitemap/blob/master/LICENSE)
