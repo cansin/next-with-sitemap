@@ -1,6 +1,6 @@
 {
   "name": "next-with-sitemap",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Higher order Next.js configuration for generating sitemap.xml and robots.txt",
   "main": "index.js",
   "private": false,
