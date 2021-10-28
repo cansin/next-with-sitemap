@@ -1,3 +1,7 @@
+# Deprecated - No Longer Maintained
+
+I would suggest using https://github.com/iamvishnusankar/next-sitemap instead of using this library going forward, as it is not being maintained anymore.
+
 # next-with-sitemap
 [![size](https://img.shields.io/bundlephobia/minzip/next-with-sitemap)](https://bundlephobia.com/result?p=next-with-sitemap)
 [![dependencies](https://img.shields.io/librariesio/release/npm/next-with-sitemap)](https://libraries.io/npm/next-with-sitemap)
